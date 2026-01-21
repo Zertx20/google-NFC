@@ -7,9 +7,9 @@ export default function Hero() {
   const [showFloatingBar, setShowFloatingBar] = useState(true);
 
   const productImages = [
-    'https://static.readdy.ai/image/23c802d7f9313d983d4e57c3b073a22a/a6d6811163bcc17336b1418e22ff5673.jpeg',
     '/product-image-2.jpg',
     '/product-image-3.jpg',
+    'https://static.readdy.ai/image/23c802d7f9313d983d4e57c3b073a22a/a6d6811163bcc17336b1418e22ff5673.jpeg',
     '/product-image-4.jpg',
   ];
 
