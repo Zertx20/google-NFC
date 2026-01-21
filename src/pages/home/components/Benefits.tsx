@@ -33,15 +33,16 @@ export default function Benefits() {
   ];
 
   return (
-    <section className="py-20 px-4 md:px-8 lg:px-16 relative overflow-hidden">
-      {/* Background Image */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
-        style={{ backgroundImage: "url('/WhatsApp Image 2026-01-19 at 13.46.23.jpeg')" }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-white" />
-      
-      <div className="relative max-w-7xl mx-auto">
+    <section 
+      className="py-20 px-4 md:px-8 lg:px-16 relative overflow-hidden"
+      style={{
+        backgroundImage: "linear-gradient(rgba(249, 250, 251, 0.7), rgba(255, 255, 255, 0.7)), url('/whatsapp-bg-new.jpg')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
+      <div className="max-w-7xl mx-auto pb-0">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4" dir="rtl">
             ✨ وش هي لوحة Google NFC؟

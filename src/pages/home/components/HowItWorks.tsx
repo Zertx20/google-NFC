@@ -24,7 +24,15 @@ export default function HowItWorks() {
   ];
 
   return (
-    <section className="py-20 px-4 md:px-8 lg:px-16 bg-white">
+    <section 
+      className="pt-0 pb-20 px-4 md:px-8 lg:px-16 relative overflow-hidden"
+      style={{
+        backgroundImage: "linear-gradient(rgba(255, 255, 255, 0.7), rgba(249, 250, 251, 0.7)), url('/whatsapp-bg-new.jpg')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4" dir="rtl">

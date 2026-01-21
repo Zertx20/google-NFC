@@ -8,9 +8,9 @@ export default function Hero() {
 
   const productImages = [
     'https://static.readdy.ai/image/23c802d7f9313d983d4e57c3b073a22a/a6d6811163bcc17336b1418e22ff5673.jpeg',
-    'https://readdy.ai/api/search-image?query=Modern%20NFC%20Google%20Review%20plate%20elegant%20design%20showing%20Google%20logo%20vibrant%20blue%20red%20yellow%20green%20colors%20on%20white%20background%20professional%20product%20photography%20sleek%20rounded%20corners%20business%20card%20style%20minimalist%20tech%20accessory&width=800&height=800&seq=hero-slide-2&orientation=squarish',
-    'https://readdy.ai/api/search-image?query=NFC%20contactless%20technology%20plate%20for%20business%20reviews%20close%20up%20view%20showing%20tap%20gesture%20simple%20clean%20white%20background%20modern%20tech%20product%20professional%20studio%20photography%20premium%20quality&width=800&height=800&seq=hero-slide-3&orientation=squarish',
-    'https://readdy.ai/api/search-image?query=Google%20Review%20NFC%20plate%20on%20business%20counter%20desk%20retail%20environment%20professional%20setting%20sleek%20design%20modern%20technology%20contactless%20payment%20style%20simple%20background%20elegant%20presentation&width=800&height=800&seq=hero-slide-4&orientation=squarish',
+    '/product-image-2.jpg',
+    '/product-image-3.jpg',
+    '/product-image-4.jpg',
   ];
 
   const pricingOptions = [
