@@ -4,7 +4,9 @@ export default function FinalCTA() {
   };
 
   const openWhatsApp = () => {
-    window.open('https://web.whatsapp.com/', '_blank');
+    const phoneNumber = '+213795651299';
+    const message = encodeURIComponent('Bonjour, je suis intéressé(e) par la Plaque Avis Google NFC. Pouvez-vous me donner plus d\'informations ?');
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   };
 
   return (

@@ -99,7 +99,9 @@ export default function FAQ() {
             </a>
             <button
               onClick={() => {
-                window.open('https://web.whatsapp.com/', '_blank');
+                const phoneNumber = '+213795651299';
+                const message = encodeURIComponent('Bonjour, je suis intéressé(e) par la Plaque Avis Google NFC. Pouvez-vous me donner plus d\'informations ?');
+                window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
               }}
               className="bg-green-500 text-white font-bold px-6 py-3 rounded-lg hover:bg-green-600 transition-all shadow-lg whitespace-nowrap cursor-pointer inline-flex items-center gap-2"
             >
