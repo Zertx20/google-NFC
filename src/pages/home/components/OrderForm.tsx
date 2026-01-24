@@ -24,26 +24,21 @@ export default function OrderForm({ selectedPrice, selectedQuantity }: OrderForm
     'Biskra', 'Tébessa', 'Tiaret', 'Béjaïa', 'Tlemcen', 'Béchar', 'Tamanrasset', 'Ouargla'
   ];
 
-  const sendOrderToWhatsApp = (orderData: any) => {
-    const phoneNumber = '+213795651299';
-    const orderMessage = encodeURIComponent(
-      `🎉 NOUVELLE COMMANDE REÇUE! 🎉\n\n` +
-      `📦 PRODUIT: Plaque Avis Google NFC\n` +
-      `📊 QUANTITÉ: ${orderData.quantity} plaque${orderData.quantity > 1 ? 's' : ''}\n` +
-      `💰 PRIX PRODUIT: ${orderData.productPrice.toLocaleString()} DZD\n` +
-      `🚚 LIVRAISON: ${orderData.deliveryMode === 'home' ? 'À domicile' : 'Bureau (Stop Desk)'}\n` +
-      `💸 FRAIS LIVRAISON: ${orderData.deliveryFee.toLocaleString()} DZD\n` +
-      `💳 TOTAL: ${orderData.totalPrice.toLocaleString()} DZD\n\n` +
-      `👤 CLIENT:\n` +
-      `📝 Nom: ${orderData.name}\n` +
-      `📞 Téléphone: ${orderData.phone}\n` +
-      `📍 Wilaya: ${orderData.wilaya}\n` +
-      `🏘️ Commune: ${orderData.commune}\n\n` +
-      `✅ Commande réussie! Veuillez contacter le client pour confirmation.`
-    );
-    
-    // Send to WhatsApp in background without opening new page
-    fetch(`https://wa.me/${phoneNumber}?text=${orderMessage}`, { method: 'HEAD' });
+  const sendOrderToGoogleSheet = async (orderData: any) => {
+    try {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbw2wIFPr0F7P8cvcwniLCXqmxERzx87xLONpvULbPb1xAap_3zo2_fDOMEguELbCMvP0A/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData)
+      });
+      
+      console.log('Order sent to Google Sheet successfully');
+    } catch (error) {
+      console.error('Error sending order to Google Sheet:', error);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -59,12 +54,12 @@ export default function OrderForm({ selectedPrice, selectedQuantity }: OrderForm
       deliveryFee
     };
 
-    // Send order to WhatsApp
-    sendOrderToWhatsApp(orderData);
-    
-    // Show success message
+    // Show success message first
     setShowSuccess(true);
     setIsSubmitting(false);
+    
+    // Send order to Google Sheets
+    sendOrderToGoogleSheet(orderData);
     
     // Reset form after 3 seconds
     setTimeout(() => {
