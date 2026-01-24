@@ -17,7 +17,7 @@ export default function HowItWorks() {
     {
       number: '3',
       title: 'صفحة التقييم تفتح مباشرة',
-      description: 'صفحة Google Review تفتح أوتوماتيكيا. الزبون يكتب التقييم ويخلصها.',
+      description: 'صفحة Google Review تفتح أوتوماتيكيا. الزبون يكتب التقييم وكملت العملية.',
       icon: 'ri-star-smile-line',
       image: 'https://readdy.ai/api/search-image?query=Smartphone%20screen%20displaying%20Google%20review%20page%20interface%20five%20star%20rating%20system%20modern%20app%20interface%20clean%20design%20male%20business%20owner%20looking%20satisfied%20professional%20business%20environment%20positive%20customer%20experience%20realistic%20mobile%20display&width=600&height=400&seq=how-step-3&orientation=landscape',
     },
