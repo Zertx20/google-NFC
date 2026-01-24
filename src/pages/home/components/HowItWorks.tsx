@@ -3,7 +3,7 @@ export default function HowItWorks() {
     {
       number: '1',
       title: 'حط اللوحة على الطابلة',
-      description: 'لصق اللوحة على الطابلة، الكاس أو البيرو تاعك في مكان واضح للزبائن.',
+      description: 'لصق اللوحة على الطابلة، جدار أو البيرو تاعك في مكان واضح للزبائن.',
       icon: 'ri-store-2-line',
       image: '/Generate_a_realistic_202601210331.jpeg',
     },

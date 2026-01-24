@@ -14,11 +14,11 @@ export default function Hero() {
   ];
 
   const pricingOptions = [
-    { qty: 1, price: 3800, oldPrice: 5000, discount: '-24%', label: '1 plaque' },
-    { qty: 2, price: 7400, oldPrice: 10000, discount: '-26%', label: '2 plaques' },
-    { qty: 3, price: 10500, oldPrice: 15000, discount: '-30%', label: '3 plaques' },
-    { qty: 4, price: 13000, oldPrice: 20000, discount: '-35%', label: '4 plaques' },
-    { qty: 5, price: 16000, oldPrice: 25000, discount: '-36%', label: '5 plaques personnalisées (logo)' },
+    { qty: 1, price: 3500, oldPrice: 5000, discount: '-30%', label: '1 plaque' },
+    { qty: 2, price: 6500, oldPrice: 10000, discount: '-35%', label: '2 plaques' },
+    { qty: 3, price: 9500, oldPrice: 15000, discount: '-37%', label: '3 plaques' },
+    { qty: 4, price: 12500, oldPrice: 20000, discount: '-38%', label: '4 plaques' },
+    { qty: 5, price: 15000, oldPrice: 25000, discount: '-40%', label: '5 plaques personnalisées (logo)' },
   ];
 
   const selectedOption = pricingOptions.find(opt => opt.qty === selectedQuantity) || pricingOptions[0];
@@ -52,8 +52,26 @@ export default function Hero() {
     }
   };
 
+  const openWhatsApp = () => {
+    // Open WhatsApp Web directly
+    window.open('https://web.whatsapp.com/', '_blank');
+  };
+
   return (
     <section className="bg-white">
+      {/* Floating WhatsApp Button */}
+      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
+        <div className="bg-white rounded-lg shadow-lg p-2 text-xs text-gray-700 font-medium">
+          +213 795 65 12 99
+        </div>
+        <button
+          onClick={openWhatsApp}
+          className="bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg p-4 transition-all transform hover:scale-110 flex items-center justify-center"
+          aria-label="Contactez-nous sur WhatsApp"
+        >
+          <i className="ri-whatsapp-line text-2xl w-6 h-6 flex items-center justify-center"></i>
+        </button>
+      </div>
       {/* Mobile Layout - Image Carousel First */}
       <div className="lg:hidden">
         {/* Image Carousel */}
@@ -130,7 +148,7 @@ export default function Hero() {
           </div>
 
           {/* Trust Badges - Mobile */}
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 gap-3 mb-4">
             <div className="text-center p-3 bg-gray-50 rounded-lg">
               <i className="ri-shield-check-line text-teal-600 text-xl mb-1.5 w-5 h-5 flex items-center justify-center mx-auto"></i>
               <p className="text-xs text-gray-600 font-medium">Paiement sécurisé</p>
@@ -143,6 +161,13 @@ export default function Hero() {
               <i className="ri-customer-service-2-line text-teal-600 text-xl mb-1.5 w-5 h-5 flex items-center justify-center mx-auto"></i>
               <p className="text-xs text-gray-600 font-medium">Support 24/7</p>
             </div>
+            <button
+              onClick={openWhatsApp}
+              className="text-center p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors cursor-pointer"
+            >
+              <i className="ri-whatsapp-line text-green-600 text-xl mb-1.5 w-5 h-5 flex items-center justify-center mx-auto"></i>
+              <p className="text-xs text-gray-600 font-medium">WhatsApp</p>
+            </button>
           </div>
         </div>
 
@@ -279,7 +304,7 @@ export default function Hero() {
             <OrderForm selectedPrice={selectedOption.price} selectedQuantity={selectedQuantity} />
 
             {/* Trust Badges - Desktop */}
-            <div className="mt-8 grid grid-cols-3 gap-4">
+            <div className="mt-8 grid grid-cols-4 gap-4">
               <div className="text-center p-4 bg-gray-50 rounded-lg">
                 <i className="ri-shield-check-line text-teal-600 text-2xl mb-2 w-6 h-6 flex items-center justify-center mx-auto"></i>
                 <p className="text-xs text-gray-600 font-medium">Paiement sécurisé</p>
@@ -292,6 +317,13 @@ export default function Hero() {
                 <i className="ri-customer-service-2-line text-teal-600 text-2xl mb-2 w-6 h-6 flex items-center justify-center mx-auto"></i>
                 <p className="text-xs text-gray-600 font-medium">Support 24/7</p>
               </div>
+              <button
+                onClick={openWhatsApp}
+                className="text-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors cursor-pointer"
+              >
+                <i className="ri-whatsapp-line text-green-600 text-2xl mb-2 w-6 h-6 flex items-center justify-center mx-auto"></i>
+                <p className="text-xs text-gray-600 font-medium">WhatsApp</p>
+              </button>
             </div>
           </div>
         </div>

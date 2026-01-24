@@ -10,7 +10,7 @@ export default function FAQ() {
     },
     {
       question: 'واش تخدم مع كل الهواتف؟',
-      answer: 'إيه، تخدم مع كل الهواتف الذكية الحديثة اللي فيهم تقنية NFC. هذا يشمل كل هواتف iPhone من iPhone 7 وما فوق، وكل هواتف Android الحديثة. تقريبا 95% من الهواتف في الجزائر دابا فيهم NFC.',
+      answer: 'إيه، تخدم مع كل الهواتف الذكية الحديثة اللي فيهم تقنية NFC. هذا يشمل كل هواتف iPhone من iPhone 7 وما فوق، وكل هواتف Android الحديثة. تقريبا 95% من الهواتف في الجزائر الآن فيهم NFC.',
     },
     {
       question: 'واش فيها اشتراك شهري؟',
@@ -21,20 +21,12 @@ export default function FAQ() {
       answer: 'التوصيل يكون في 48 إلى 72 ساعة لكل ولايات الجزائر. نوصلو لباب الدار أو Stop Desk على حسب اختيارك. التوصيل مضمون ومؤمن.',
     },
     {
-      question: 'نقدر نشخصنها بالشعار تاع المشروع؟',
-      answer: 'إيه! إذا طلبت 5 لوحات أو أكثر، نقدرولك نحطو الشعار (Logo) تاع المشروع تاعك. هذا يعطي احترافية أكبر ويخلي العلامة التجارية تاعك أقوى.',
-    },
-    {
       question: 'كيفاش نركبها؟',
-      answer: 'سهلة بزاف! حوس الفيلم الواقي من الورا، لصقها على الطابلة أو الكاس أو البيرو في مكان واضح للزبائن، وخلاص. في 20 ثانية تكون جاهزة للاستعمال.',
+      answer: 'سهلة بزاف! انزع الغلاف اللاصق من الخلفية، لصقها على الطابلة أو جدار أو البيرو في مكان واضح للزبائن، وخلاص. في 20 ثانية تكون جاهزة للاستعمال.',
     },
     {
       question: 'واش تزيد فعلا التقييمات؟',
       answer: 'إيه وبقوة! الإحصائيات تقول أن المشاريع اللي استعملت اللوحة زادت التقييمات تاعها بـ 250% في أقل من شهرين. الزبائن يحبو السهولة، وكي الأمور تكون سهلة، يكتبو التقييم مباشرة.',
-    },
-    {
-      question: 'واش نقدر نرجعها إذا ماعجبتنيش؟',
-      answer: 'طبعا! عندك ضمان الاسترجاع لمدة 14 يوم. إذا المنتج ماعجبكش لأي سبب، ترجعها وناخذولك الفلوس تاعك. بلا أسئلة، بلا تعقيد.',
     },
   ];
 
@@ -99,21 +91,21 @@ export default function FAQ() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <a
-              href="tel:+213555123456"
+              href="tel:+213795651299"
               className="bg-white text-teal-600 font-bold px-6 py-3 rounded-lg hover:bg-gray-50 transition-all shadow-lg whitespace-nowrap cursor-pointer inline-flex items-center gap-2"
             >
               <i className="ri-phone-line text-xl w-5 h-5 flex items-center justify-center"></i>
               <span dir="rtl">اتصل بنا</span>
             </a>
-            <a
-              href="https://wa.me/213555123456"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => {
+                window.open('https://web.whatsapp.com/', '_blank');
+              }}
               className="bg-green-500 text-white font-bold px-6 py-3 rounded-lg hover:bg-green-600 transition-all shadow-lg whitespace-nowrap cursor-pointer inline-flex items-center gap-2"
             >
               <i className="ri-whatsapp-line text-xl w-5 h-5 flex items-center justify-center"></i>
               <span dir="rtl">واتساب</span>
-            </a>
+            </button>
           </div>
         </div>
       </div>

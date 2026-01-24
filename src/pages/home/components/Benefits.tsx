@@ -21,14 +21,14 @@ export default function Benefits() {
       description: 'كل الهواتف Android و iPhone الجديدة اللي فيهم NFC تخدم عادي.',
     },
     {
-      icon: 'ri-flashlight-line',
-      title: 'إعداد في 20 ثانية غير',
-      description: 'حوس الفيلم الواقي، لصقها وخلصتي. جاهزة للاستعمال.',
-    },
-    {
       icon: 'ri-palette-line',
       title: 'تصميم راقي',
-      description: 'شكل بريميوم للطابلة، الكاس أو البيرو. يتناسب مليح مع أي مكان.',
+      description: 'شكل بريميوم للطابلة،  جدار أو البيرو . يتناسب مليح مع أي مكان.',
+    },
+    {
+      icon: 'ri-flashlight-line',
+      title: 'تصميم راقي',
+      description: 'انزع الغلاف اللاصق من الخلفية، لصقها وكملت. جاهزة للاستعمال.',
     },
   ];
 

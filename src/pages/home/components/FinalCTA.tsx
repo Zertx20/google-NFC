@@ -3,6 +3,10 @@ export default function FinalCTA() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const openWhatsApp = () => {
+    window.open('https://web.whatsapp.com/', '_blank');
+  };
+
   return (
     <section className="relative py-20 px-4 md:px-8 lg:px-16 overflow-hidden">
       {/* Background with Gradient */}
@@ -60,19 +64,17 @@ export default function FinalCTA() {
             onClick={scrollToTop}
             className="group bg-teal-500 hover:bg-teal-400 text-white font-bold px-10 py-5 rounded-full transition-all shadow-2xl whitespace-nowrap cursor-pointer inline-flex items-center gap-3 text-lg hover:scale-105"
           >
-            <span dir="rtl">اطلبها دابا</span>
+            <span dir="rtl">اطلبها الآن</span>
             <i className="ri-arrow-up-line text-2xl w-6 h-6 flex items-center justify-center group-hover:translate-y-1 transition-transform"></i>
           </button>
 
-          <a
-            href="https://wa.me/213555123456"
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={openWhatsApp}
             className="bg-white/10 backdrop-blur-sm hover:bg-white/20 border border-white/20 text-white font-bold px-8 py-5 rounded-full transition-all whitespace-nowrap cursor-pointer inline-flex items-center gap-3 text-lg"
           >
             <i className="ri-whatsapp-line text-2xl w-6 h-6 flex items-center justify-center"></i>
             <span dir="rtl">تكلم معانا</span>
-          </a>
+          </button>
         </div>
 
         {/* Trust Indicators */}

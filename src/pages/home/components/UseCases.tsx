@@ -8,13 +8,6 @@ export default function UseCases() {
       color: 'from-orange-500 to-red-500',
     },
     {
-      title: 'صالونات الحلاقة',
-      description: 'بعد الحلاقة، الزبون يقرب الهاتف ويكتب التقييم. بسيطة وسريعة، وتخليك الأول في المنطقة.',
-      icon: 'ri-scissors-cut-line',
-      image: 'https://readdy.ai/api/search-image?query=Modern%20professional%20barbershop%20interior%20with%20barber%20chairs%20mirrors%20styling%20station%20NFC%20review%20plate%20visible%20male%20barber%20working%20clean%20organized%20space%20contemporary%20design%20authentic%20Algerian%20barbershop%20realistic%20professional%20photography&width=700&height=500&seq=usecase-barber&orientation=landscape',
-      color: 'from-blue-500 to-cyan-500',
-    },
-    {
       title: 'محلات الهواتف',
       description: 'بعد البيع أو الإصلاح، الزبون يعطيك التقييم في ثواني. يزيد ثقة الزبائن الجداد.',
       icon: 'ri-smartphone-line',
