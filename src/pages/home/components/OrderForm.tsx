@@ -20,13 +20,19 @@ export default function OrderForm({ selectedPrice, selectedQuantity }: OrderForm
   const totalPrice = selectedPrice + deliveryFee;
 
   const wilayas = [
-    'Alger', 'Oran', 'Constantine', 'Annaba', 'Blida', 'Batna', 'Djelfa', 'Sétif', 'Sidi Bel Abbès',
-    'Biskra', 'Tébessa', 'Tiaret', 'Béjaïa', 'Tlemcen', 'Béchar', 'Tamanrasset', 'Ouargla'
+    'Adrar', 'Chlef', 'Laghouat', 'Oum El Bouaghi', 'Batna', 'Béjaïa', 'Biskra', 'Béchar', 'Blida', 'Bouira',
+    'Tamanrasset', 'Tébessa', 'Tlemcen', 'Tiaret', 'Tizi Ouzou', 'Alger', 'Djelfa', 'Jijel', 'Sétif', 'Saïda',
+    'Skikda', 'Sidi Bel Abbès', 'Annaba', 'Guelma', 'Constantine', 'Médéa', 'Mostaganem', 'M\'Sila', 'Mascara', 'Ouargla',
+    'Oran', 'El Bayadh', 'Illizi', 'Bordj Bou Arréridj', 'Boumerdès', 'El Tarf', 'Tindouf', 'Tissemsilt', 'El Oued', 'Khenchela',
+    'Souk Ahras', 'Tipaza', 'Mila', 'Aïn Defla', 'Naâma', 'Aïn Témouchent', 'Ghardaïa', 'Relizane', 'Timimoun', 'Bordj Badji Mokhtar',
+    'Ouled Djellal', 'Béni Abbès', 'In Salah', 'In Guezzam', 'Touggourt', 'Djanet', 'El M\'Ghair', 'El Menia'
   ];
 
   const sendOrderToGoogleSheet = async (orderData: any) => {
     try {
-      const response = await fetch('https://script.google.com/macros/s/AKfycbw2wIFPr0F7P8cvcwniLCXqmxERzx87xLONpvULbPb1xAap_3zo2_fDOMEguELbCMvP0A/exec', {
+      console.log('Sending order data:', orderData);
+      
+      const response = await fetch('https://script.google.com/macros/s/AKfycby0NiNoZpZpO8Gyplfxl8Uj78ptKM2ExRjmG1RrHqNJ3tujfBED-xungg9kR_vBpFVpGg/exec', {
         method: 'POST',
         mode: 'no-cors',
         headers: {
@@ -36,6 +42,7 @@ export default function OrderForm({ selectedPrice, selectedQuantity }: OrderForm
       });
       
       console.log('Order sent to Google Sheet successfully');
+      console.log('Response:', response);
     } catch (error) {
       console.error('Error sending order to Google Sheet:', error);
     }
