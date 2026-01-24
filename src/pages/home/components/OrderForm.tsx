@@ -186,7 +186,7 @@ export default function OrderForm({ selectedPrice, selectedQuantity }: OrderForm
         >
           <span className="flex items-center justify-center gap-2">
             <i className="ri-shopping-cart-line text-xl w-5 h-5 flex items-center justify-center"></i>
-            Commander Maintenant
+            Commander
           </span>
         </button>
       </div>

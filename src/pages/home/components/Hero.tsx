@@ -18,7 +18,7 @@ export default function Hero() {
     { qty: 2, price: 6500, oldPrice: 10000, discount: '-35%', label: '2 plaques' },
     { qty: 3, price: 9500, oldPrice: 15000, discount: '-37%', label: '3 plaques' },
     { qty: 4, price: 12500, oldPrice: 20000, discount: '-38%', label: '4 plaques' },
-    { qty: 5, price: 15000, oldPrice: 25000, discount: '-40%', label: '5 plaques personnalisées (logo)' },
+    { qty: 5, price: 15000, oldPrice: 25000, discount: '-40%', label: '5 plaques' },
   ];
 
   const selectedOption = pricingOptions.find(opt => opt.qty === selectedQuantity) || pricingOptions[0];
