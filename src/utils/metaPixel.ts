@@ -6,6 +6,7 @@ declare global {
       event: string,
       params?: Record<string, any>
     ) => void;
+    _fbPixelInitialized?: boolean;
   }
 }
 
@@ -24,6 +25,11 @@ export const initMetaPixel = () => {
  */
 export const trackPageView = () => {
   if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+    // Ensure pixel is initialized
+    if (!window._fbPixelInitialized) {
+      window.fbq('init', '1910072642926314');
+      window._fbPixelInitialized = true;
+    }
     window.fbq('track', 'PageView');
   }
 };
