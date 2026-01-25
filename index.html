@@ -36,34 +36,8 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-    </script>
-    <script>
-    // Initialize pixel after DOM is ready
-    (function() {
-      function initPixel() {
-        if (typeof fbq !== 'undefined') {
-          if (!window._fbPixelInitialized) {
-            fbq('init', '1910072642926314');
-            window._fbPixelInitialized = true;
-          }
-          fbq('track', 'PageView');
-        } else {
-          // Wait for pixel to load
-          setTimeout(initPixel, 100);
-        }
-      }
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initPixel);
-      } else {
-        initPixel();
-      }
-      // Also fire on window load for React SPAs
-      window.addEventListener('load', function() {
-        if (typeof fbq !== 'undefined' && window._fbPixelInitialized) {
-          fbq('track', 'PageView');
-        }
-      });
-    })();
+    fbq('init', '1910072642926314');
+    fbq('track', 'PageView');
     </script>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1910072642926314&ev=PageView&noscript=1"
