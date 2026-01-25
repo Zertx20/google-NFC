@@ -39,20 +39,6 @@
     fbq('init', '1910072642926314');
     fbq('track', 'PageView');
     </script>
-    <!-- Ensure pixel fires after page load (fallback for React SPAs) -->
-    <script>
-    window.addEventListener('load', function() {
-      if (typeof fbq !== 'undefined') {
-        // Re-initialize if not already done
-        if (!window._fbPixelInit) {
-          fbq('init', '1910072642926314');
-          window._fbPixelInit = true;
-        }
-        // Fire PageView again to ensure it's tracked
-        fbq('track', 'PageView');
-      }
-    });
-    </script>
     <!-- End Meta Pixel Code -->
 
     <!-- Icons -->

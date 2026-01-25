@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { trackLead } from '../../../utils/metaPixel';
 
 interface OrderFormProps {
   selectedPrice: number;
@@ -63,14 +62,15 @@ export default function OrderForm({ selectedPrice, selectedQuantity }: OrderForm
     };
 
     // Track Lead event when form is successfully submitted
-    // This fires on form submission (not on page load) to track actual conversions
-    trackLead({
-      content_name: 'Plaque Avis Google NFC',
-      content_category: 'Product',
-      value: totalPrice,
-      currency: 'DZD',
-      quantity: selectedQuantity
-    });
+    if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+      window.fbq('track', 'Lead', {
+        content_name: 'Plaque Avis Google NFC',
+        content_category: 'Product',
+        value: totalPrice,
+        currency: 'DZD',
+        quantity: selectedQuantity
+      });
+    }
 
     // Show success message first
     setShowSuccess(true);

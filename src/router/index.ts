@@ -2,7 +2,6 @@ import { useNavigate, type NavigateFunction, useLocation } from "react-router-do
 import { useRoutes } from "react-router-dom";
 import { useEffect } from "react";
 import routes from "./config";
-import { trackPageView } from "../utils/metaPixel";
 
 let navigateResolver: (navigate: ReturnType<typeof useNavigate>) => void;
 
@@ -26,14 +25,6 @@ export function AppRoutes() {
     navigateResolver(window.REACT_APP_NAVIGATE);
   });
 
-  // Track PageView on route changes
-  useEffect(() => {
-    // Small delay to ensure pixel is loaded
-    const timer = setTimeout(() => {
-      trackPageView();
-    }, 100);
-    return () => clearTimeout(timer);
-  }, [location.pathname]);
 
   return element;
 }
