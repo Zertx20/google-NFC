@@ -36,8 +36,42 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1910072642926314');
-    fbq('track', 'PageView');
+    </script>
+    <script>
+    // Initialize and track PageView - wait for pixel to be ready
+    (function() {
+      var pixelId = '1910072642926314';
+      var initAttempts = 0;
+      var maxAttempts = 50; // Try for 5 seconds (50 * 100ms)
+      
+      function initPixel() {
+        if (typeof fbq !== 'undefined' && fbq.loaded) {
+          fbq('init', pixelId);
+          fbq('track', 'PageView');
+        } else if (initAttempts < maxAttempts) {
+          initAttempts++;
+          setTimeout(initPixel, 100);
+        }
+      }
+      
+      // Start initialization
+      initPixel();
+      
+      // Also fire on DOM ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          if (typeof fbq !== 'undefined') {
+            fbq('init', pixelId);
+            fbq('track', 'PageView');
+          }
+        });
+      } else {
+        if (typeof fbq !== 'undefined') {
+          fbq('init', pixelId);
+          fbq('track', 'PageView');
+        }
+      }
+    })();
     </script>
     <!-- End Meta Pixel Code -->
 
@@ -76,7 +110,7 @@
       }
     }
     </script>
-    <script type="module" crossorigin src="/assets/index-BJAOwOkN.js"></script>
+    <script type="module" crossorigin src="/assets/index-CYNfrkL7.js"></script>
     <link rel="stylesheet" crossorigin href="/assets/index-Bq_dZd8m.css">
   </head>
   <body>
@@ -85,15 +119,5 @@
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1910072642926314&ev=PageView&noscript=1"
     /></noscript>
-    <!-- Ensure Meta Pixel fires after page load -->
-    <script>
-    window.addEventListener('load', function() {
-      setTimeout(function() {
-        if (typeof fbq !== 'undefined') {
-          fbq('track', 'PageView');
-        }
-      }, 1000);
-    });
-    </script>
   </body>
 </html>
