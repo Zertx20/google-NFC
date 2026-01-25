@@ -62,7 +62,8 @@ export default function OrderForm({ selectedPrice, selectedQuantity }: OrderForm
       deliveryFee
     };
 
-    // Track Lead event when form is submitted
+    // Track Lead event when form is successfully submitted
+    // This fires on form submission (not on page load) to track actual conversions
     trackLead({
       content_name: 'Plaque Avis Google NFC',
       content_category: 'Product',

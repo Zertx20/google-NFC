@@ -4,6 +4,15 @@ export default function FinalCTA() {
   };
 
   const openWhatsApp = () => {
+    // Track Lead event when WhatsApp button is clicked in FinalCTA section
+    // This fires before opening WhatsApp to ensure tracking completes without blocking redirect
+    if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+      window.fbq('track', 'Lead', {
+        content_name: 'WhatsApp Contact - Final CTA',
+        content_category: 'Contact'
+      });
+    }
+    
     const phoneNumber = '+213795651299';
     const message = encodeURIComponent('Bonjour, je suis intéressé(e) par la Plaque Avis Google NFC. Pouvez-vous me donner plus d\'informations ?');
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');

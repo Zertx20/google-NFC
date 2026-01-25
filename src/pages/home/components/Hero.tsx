@@ -53,6 +53,15 @@ export default function Hero() {
   };
 
   const openWhatsApp = () => {
+    // Track Lead event when WhatsApp button is clicked
+    // This fires before opening WhatsApp to ensure tracking completes
+    if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+      window.fbq('track', 'Lead', {
+        content_name: 'WhatsApp Contact - Hero',
+        content_category: 'Contact'
+      });
+    }
+    
     const phoneNumber = '+213795651299';
     const message = encodeURIComponent('Bonjour, je suis intéressé(e) par la Plaque Avis Google NFC. Pouvez-vous me donner plus d\'informations ?');
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
