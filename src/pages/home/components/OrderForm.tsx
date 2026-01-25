@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { trackLead } from '../../../utils/metaPixel';
 
 interface OrderFormProps {
   selectedPrice: number;
@@ -60,6 +61,15 @@ export default function OrderForm({ selectedPrice, selectedQuantity }: OrderForm
       productPrice: selectedPrice,
       deliveryFee
     };
+
+    // Track Lead event when form is submitted
+    trackLead({
+      content_name: 'Plaque Avis Google NFC',
+      content_category: 'Product',
+      value: totalPrice,
+      currency: 'DZD',
+      quantity: selectedQuantity
+    });
 
     // Show success message first
     setShowSuccess(true);

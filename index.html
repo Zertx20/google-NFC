@@ -43,50 +43,6 @@
     src="https://www.facebook.com/tr?id=1910072642926314&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel Code -->
-    
-    <!-- Simple Meta Pixel Events -->
-    <script>
-    // Wait for Meta Pixel to be ready
-    setTimeout(function() {
-        console.log('Testing Meta Pixel...');
-        
-        // Test if fbq is available
-        if (typeof fbq === 'function') {
-            console.log('fbq function is available');
-            
-            // Fire ViewContent
-            fbq('track', 'ViewContent');
-            console.log('ViewContent event fired');
-            
-            // Fire Lead after 1 second
-            setTimeout(function() {
-                fbq('track', 'Lead');
-                console.log('Lead event fired');
-            }, 1000);
-            
-        } else {
-            console.error('fbq function not available');
-        }
-    }, 2000);
-    
-    // Add click tracking to everything
-    document.addEventListener('click', function(e) {
-        setTimeout(function() {
-            if (typeof fbq === 'function') {
-                fbq('track', 'Lead');
-                console.log('Lead event fired on click');
-            }
-        }, 100);
-    }, true);
-    
-    // Manual test
-    window.testLead = function() {
-        if (typeof fbq === 'function') {
-            fbq('track', 'Lead');
-            console.log('Manual Lead event fired');
-        }
-    };
-    </script>
 
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" />
