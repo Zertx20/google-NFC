@@ -32,7 +32,7 @@ export default function OrderForm({ selectedPrice, selectedQuantity }: OrderForm
     try {
       console.log('Sending order data:', orderData);
       
-      const response = await fetch('https://script.google.com/macros/s/AKfycbwLgRv3GQ1u7e2yORi3RQ4icB7mDdCE6i_VjxQrVnwVaVJel_qsDC_mF4n3aNChJAaAqA/exec', {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbzxxX3SUi8N6NBYw0TZyWTHGGxCzzdkwLS1jtyYlufulxXGSkPjD2vMIO41BaNbqHA/exec', {
         method: 'POST',
         mode: 'no-cors',
         headers: {
