@@ -44,110 +44,48 @@
     /></noscript>
     <!-- End Meta Pixel Code -->
     
-    <!-- Enhanced Meta Pixel Events -->
+    <!-- Simple Meta Pixel Events -->
     <script>
-    // Initialize Meta Pixel with error handling
-    window.fbq = window.fbq || function() {
-        window.fbq.callMethod ? window.fbq.callMethod.apply(window.fbq, arguments) : window.fbq.queue.push(arguments);
-    };
-    window.fbq.queue = [];
-    window.fbq.loaded = true;
-    
-    // Manual test function
-    window.testMetaPixel = function() {
-        console.log('Testing Meta Pixel Lead event...');
+    // Wait for Meta Pixel to be ready
+    setTimeout(function() {
+        console.log('Testing Meta Pixel...');
+        
+        // Test if fbq is available
         if (typeof fbq === 'function') {
-            fbq('track', 'Lead');
-            console.log('Manual Lead event fired successfully!');
+            console.log('fbq function is available');
+            
+            // Fire ViewContent
+            fbq('track', 'ViewContent');
+            console.log('ViewContent event fired');
+            
+            // Fire Lead after 1 second
+            setTimeout(function() {
+                fbq('track', 'Lead');
+                console.log('Lead event fired');
+            }, 1000);
+            
         } else {
             console.error('fbq function not available');
         }
-    };
+    }, 2000);
     
-    // Wait for page to fully load
-    window.addEventListener('load', function() {
-        console.log('Meta Pixel loaded, initializing events...');
-        
-        // Track ViewContent after page load
-        setTimeout(function() {
-            if (typeof fbq === 'function') {
-                fbq('track', 'ViewContent');
-                console.log('Meta Pixel ViewContent event fired');
-            }
-        }, 1000);
-        
-        // Force Lead event on page load for testing
+    // Add click tracking to everything
+    document.addEventListener('click', function(e) {
         setTimeout(function() {
             if (typeof fbq === 'function') {
                 fbq('track', 'Lead');
-                console.log('Meta Pixel Lead event fired (test)');
+                console.log('Lead event fired on click');
             }
-        }, 2000);
-        
-        // Aggressive Lead event tracking
-        function addLeadTracking() {
-            console.log('Scanning for elements to track...');
-            
-            // Track all clickable elements
-            const clickables = document.querySelectorAll('button, input[type="button"], input[type="submit"], .btn, [role="button"], a, [onclick], [data-action]');
-            clickables.forEach(function(element, index) {
-                if (!element.dataset.leadTracked) {
-                    element.addEventListener('click', function(e) {
-                        console.log('Element clicked:', element.textContent || element.className || element.tagName);
-                        if (typeof fbq === 'function') {
-                            fbq('track', 'Lead');
-                            console.log('Meta Pixel Lead event fired on click');
-                        } else {
-                            console.error('fbq not available during click');
-                        }
-                    });
-                    element.dataset.leadTracked = 'true';
-                }
-            });
-            
-            console.log('Tracked', clickables.length, 'clickable elements');
+        }, 100);
+    }, true);
+    
+    // Manual test
+    window.testLead = function() {
+        if (typeof fbq === 'function') {
+            fbq('track', 'Lead');
+            console.log('Manual Lead event fired');
         }
-        
-        // Initial tracking setup
-        setTimeout(addLeadTracking, 500);
-        
-        // Re-scan for new elements every 2 seconds
-        setInterval(addLeadTracking, 2000);
-        
-        // Track success messages
-        const observer = new MutationObserver(function(mutations) {
-            mutations.forEach(function(mutation) {
-                mutation.addedNodes.forEach(function(node) {
-                    if (node.nodeType === 1 && node.textContent) {
-                        const text = node.textContent.toLowerCase();
-                        if (text.includes('commande réussie') || text.includes('merci') || text.includes('success') || text.includes('confirmé')) {
-                            console.log('Success message detected:', text);
-                            if (typeof fbq === 'function') {
-                                fbq('track', 'Lead');
-                                console.log('Meta Pixel Lead event fired on success message');
-                            }
-                        }
-                    }
-                });
-            });
-        });
-        
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true,
-            characterData: true
-        });
-        
-        // Add keyboard trigger for testing
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && e.key === 'l') {
-                e.preventDefault();
-                window.testMetaPixel();
-            }
-        });
-        
-        console.log('Meta Pixel events initialized. Press Ctrl+L to test Lead event.');
-    });
+    };
     </script>
 
     <!-- Icons -->
