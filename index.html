@@ -53,6 +53,17 @@
     window.fbq.queue = [];
     window.fbq.loaded = true;
     
+    // Manual test function
+    window.testMetaPixel = function() {
+        console.log('Testing Meta Pixel Lead event...');
+        if (typeof fbq === 'function') {
+            fbq('track', 'Lead');
+            console.log('Manual Lead event fired successfully!');
+        } else {
+            console.error('fbq function not available');
+        }
+    };
+    
     // Wait for page to fully load
     window.addEventListener('load', function() {
         console.log('Meta Pixel loaded, initializing events...');
@@ -65,56 +76,40 @@
             }
         }, 1000);
         
-        // Enhanced Lead event tracking
+        // Force Lead event on page load for testing
+        setTimeout(function() {
+            if (typeof fbq === 'function') {
+                fbq('track', 'Lead');
+                console.log('Meta Pixel Lead event fired (test)');
+            }
+        }, 2000);
+        
+        // Aggressive Lead event tracking
         function addLeadTracking() {
-            // Track all button clicks
-            const allButtons = document.querySelectorAll('button, input[type="button"], input[type="submit"], .btn, [role="button"]');
-            allButtons.forEach(function(button, index) {
-                if (!button.dataset.leadTracked) {
-                    button.addEventListener('click', function(e) {
-                        console.log('Button clicked:', button.textContent || button.className);
+            console.log('Scanning for elements to track...');
+            
+            // Track all clickable elements
+            const clickables = document.querySelectorAll('button, input[type="button"], input[type="submit"], .btn, [role="button"], a, [onclick], [data-action]');
+            clickables.forEach(function(element, index) {
+                if (!element.dataset.leadTracked) {
+                    element.addEventListener('click', function(e) {
+                        console.log('Element clicked:', element.textContent || element.className || element.tagName);
                         if (typeof fbq === 'function') {
                             fbq('track', 'Lead');
-                            console.log('Meta Pixel Lead event fired on button');
+                            console.log('Meta Pixel Lead event fired on click');
+                        } else {
+                            console.error('fbq not available during click');
                         }
                     });
-                    button.dataset.leadTracked = 'true';
+                    element.dataset.leadTracked = 'true';
                 }
             });
             
-            // Track all links
-            const allLinks = document.querySelectorAll('a');
-            allLinks.forEach(function(link) {
-                if (!link.dataset.leadTracked) {
-                    link.addEventListener('click', function(e) {
-                        console.log('Link clicked:', link.textContent || link.href);
-                        if (typeof fbq === 'function') {
-                            fbq('track', 'Lead');
-                            console.log('Meta Pixel Lead event fired on link');
-                        }
-                    });
-                    link.dataset.leadTracked = 'true';
-                }
-            });
-            
-            // Track form submissions
-            const allForms = document.querySelectorAll('form');
-            allForms.forEach(function(form) {
-                if (!form.dataset.leadTracked) {
-                    form.addEventListener('submit', function(e) {
-                        console.log('Form submitted');
-                        if (typeof fbq === 'function') {
-                            fbq('track', 'Lead');
-                            console.log('Meta Pixel Lead event fired on form submit');
-                        }
-                    });
-                    form.dataset.leadTracked = 'true';
-                }
-            });
+            console.log('Tracked', clickables.length, 'clickable elements');
         }
         
         // Initial tracking setup
-        addLeadTracking();
+        setTimeout(addLeadTracking, 500);
         
         // Re-scan for new elements every 2 seconds
         setInterval(addLeadTracking, 2000);
@@ -143,7 +138,15 @@
             characterData: true
         });
         
-        console.log('Meta Pixel events initialized');
+        // Add keyboard trigger for testing
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'l') {
+                e.preventDefault();
+                window.testMetaPixel();
+            }
+        });
+        
+        console.log('Meta Pixel events initialized. Press Ctrl+L to test Lead event.');
     });
     </script>
 
