@@ -65,40 +65,59 @@
             }
         }, 1000);
         
-        // Track Lead events on button clicks
-        function trackLeadEvent(selector, eventType) {
-            const elements = document.querySelectorAll(selector);
-            elements.forEach(function(element) {
-                if (!element.dataset.fbqLeadTracked) {
-                    element.addEventListener('click', function(e) {
+        // Enhanced Lead event tracking
+        function addLeadTracking() {
+            // Track all button clicks
+            const allButtons = document.querySelectorAll('button, input[type="button"], input[type="submit"], .btn, [role="button"]');
+            allButtons.forEach(function(button, index) {
+                if (!button.dataset.leadTracked) {
+                    button.addEventListener('click', function(e) {
+                        console.log('Button clicked:', button.textContent || button.className);
                         if (typeof fbq === 'function') {
                             fbq('track', 'Lead');
-                            console.log('Meta Pixel Lead event fired on:', eventType);
-                            element.dataset.fbqLeadTracked = 'true';
+                            console.log('Meta Pixel Lead event fired on button');
                         }
                     });
+                    button.dataset.leadTracked = 'true';
+                }
+            });
+            
+            // Track all links
+            const allLinks = document.querySelectorAll('a');
+            allLinks.forEach(function(link) {
+                if (!link.dataset.leadTracked) {
+                    link.addEventListener('click', function(e) {
+                        console.log('Link clicked:', link.textContent || link.href);
+                        if (typeof fbq === 'function') {
+                            fbq('track', 'Lead');
+                            console.log('Meta Pixel Lead event fired on link');
+                        }
+                    });
+                    link.dataset.leadTracked = 'true';
+                }
+            });
+            
+            // Track form submissions
+            const allForms = document.querySelectorAll('form');
+            allForms.forEach(function(form) {
+                if (!form.dataset.leadTracked) {
+                    form.addEventListener('submit', function(e) {
+                        console.log('Form submitted');
+                        if (typeof fbq === 'function') {
+                            fbq('track', 'Lead');
+                            console.log('Meta Pixel Lead event fired on form submit');
+                        }
+                    });
+                    form.dataset.leadTracked = 'true';
                 }
             });
         }
         
-        // Track CTA buttons
-        trackLeadEvent('button, .btn, [class*="teal"], [class*="commander"], [class*="order"]', 'CTA Button');
+        // Initial tracking setup
+        addLeadTracking();
         
-        // Track WhatsApp links
-        trackLeadEvent('a[href*="wa.me"], a[href*="whatsapp"], [onclick*="whatsapp"]', 'WhatsApp');
-        
-        // Track form submissions
-        const forms = document.querySelectorAll('form');
-        forms.forEach(function(form) {
-            form.addEventListener('submit', function(e) {
-                setTimeout(function() {
-                    if (typeof fbq === 'function') {
-                        fbq('track', 'Lead');
-                        console.log('Meta Pixel Lead event fired on: Form Submit');
-                    }
-                }, 500);
-            });
-        });
+        // Re-scan for new elements every 2 seconds
+        setInterval(addLeadTracking, 2000);
         
         // Track success messages
         const observer = new MutationObserver(function(mutations) {
@@ -106,10 +125,11 @@
                 mutation.addedNodes.forEach(function(node) {
                     if (node.nodeType === 1 && node.textContent) {
                         const text = node.textContent.toLowerCase();
-                        if (text.includes('commande réussie') || text.includes('merci') || text.includes('success')) {
+                        if (text.includes('commande réussie') || text.includes('merci') || text.includes('success') || text.includes('confirmé')) {
+                            console.log('Success message detected:', text);
                             if (typeof fbq === 'function') {
                                 fbq('track', 'Lead');
-                                console.log('Meta Pixel Lead event fired on: Success Message');
+                                console.log('Meta Pixel Lead event fired on success message');
                             }
                         }
                     }
