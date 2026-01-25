@@ -43,98 +43,89 @@
     src="https://www.facebook.com/tr?id=1910072642926314&ev=PageView&noscript=1"
     /></noscript>
     <!-- End Meta Pixel Code -->
-
-    <!-- Meta Pixel Custom Events Script -->
+    
+    <!-- Enhanced Meta Pixel Events -->
     <script>
-    // Wait for DOM to be fully loaded
-    document.addEventListener('DOMContentLoaded', function() {
+    // Initialize Meta Pixel with error handling
+    window.fbq = window.fbq || function() {
+        window.fbq.callMethod ? window.fbq.callMethod.apply(window.fbq, arguments) : window.fbq.queue.push(arguments);
+    };
+    window.fbq.queue = [];
+    window.fbq.loaded = true;
+    
+    // Wait for page to fully load
+    window.addEventListener('load', function() {
+        console.log('Meta Pixel loaded, initializing events...');
         
-        // Track Lead events on main CTA buttons and WhatsApp buttons
-        function trackLeadEvent(element, eventType) {
-            // Prevent multiple tracking on the same element
-            if (element.dataset.fbqTracked === 'true') {
-                return;
+        // Track ViewContent after page load
+        setTimeout(function() {
+            if (typeof fbq === 'function') {
+                fbq('track', 'ViewContent');
+                console.log('Meta Pixel ViewContent event fired');
             }
-            
-            // Track Lead event when element is clicked
-            element.addEventListener('click', function() {
-                // Fire Meta Pixel Lead event
-                fbq('track', 'Lead');
-                
-                // Mark as tracked to prevent duplicate events
-                element.dataset.fbqTracked = 'true';
-                
-                console.log('Meta Pixel Lead event tracked on:', eventType);
-            });
-        }
+        }, 1000);
         
-        // Find and track all main CTA buttons (Order Now, Commander, etc.)
-        const ctaButtons = document.querySelectorAll('button[class*="teal"], button[class*="bg-teal"], button[class*="commander"], button[class*="order"]');
-        ctaButtons.forEach(function(button) {
-            trackLeadEvent(button, 'CTA Button');
-        });
-        
-        // Find and track all WhatsApp buttons
-        const whatsappButtons = document.querySelectorAll('button[onclick*="whatsapp"], button[onclick*="WhatsApp"], a[href*="wa.me"], a[href*="whatsapp"]');
-        whatsappButtons.forEach(function(button) {
-            trackLeadEvent(button, 'WhatsApp Button');
-        });
-        
-        // Track Lead event on successful form submission
-        function trackFormSubmission() {
-            // Look for success messages or form completion
-            const successObserver = new MutationObserver(function(mutations) {
-                mutations.forEach(function(mutation) {
-                    mutation.addedNodes.forEach(function(node) {
-                        // Check if success message appears
-                        if (node.nodeType === Node.ELEMENT_NODE) {
-                            const successElement = node.querySelector ? node.querySelector('[class*="success"], [class*="réussie"], [class*="confirm"]') : null;
-                            const isSuccessMessage = node.textContent && (
-                                node.textContent.includes('Commande réussie') ||
-                                node.textContent.includes('Merci') ||
-                                node.textContent.includes('success') ||
-                                node.textContent.includes('confirmé')
-                            );
-                            
-                            if (successElement || isSuccessMessage) {
-                                // Fire Lead event on successful form submission
-                                fbq('track', 'Lead');
-                                console.log('Meta Pixel Lead event tracked on: Form Submission Success');
-                                
-                                // Stop observing after tracking
-                                successObserver.disconnect();
-                            }
+        // Track Lead events on button clicks
+        function trackLeadEvent(selector, eventType) {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(function(element) {
+                if (!element.dataset.fbqLeadTracked) {
+                    element.addEventListener('click', function(e) {
+                        if (typeof fbq === 'function') {
+                            fbq('track', 'Lead');
+                            console.log('Meta Pixel Lead event fired on:', eventType);
+                            element.dataset.fbqLeadTracked = 'true';
                         }
                     });
-                });
-            });
-            
-            // Start observing the document for success messages
-            successObserver.observe(document.body, {
-                childList: true,
-                subtree: true
+                }
             });
         }
         
-        // Initialize form submission tracking
-        trackFormSubmission();
+        // Track CTA buttons
+        trackLeadEvent('button, .btn, [class*="teal"], [class*="commander"], [class*="order"]', 'CTA Button');
         
-        // Also track form submit events directly
+        // Track WhatsApp links
+        trackLeadEvent('a[href*="wa.me"], a[href*="whatsapp"], [onclick*="whatsapp"]', 'WhatsApp');
+        
+        // Track form submissions
         const forms = document.querySelectorAll('form');
         forms.forEach(function(form) {
             form.addEventListener('submit', function(e) {
-                // Small delay to ensure form processes first
                 setTimeout(function() {
-                    fbq('track', 'Lead');
-                    console.log('Meta Pixel Lead event tracked on: Form Submit');
-                }, 100);
+                    if (typeof fbq === 'function') {
+                        fbq('track', 'Lead');
+                        console.log('Meta Pixel Lead event fired on: Form Submit');
+                    }
+                }, 500);
             });
         });
         
-        console.log('Meta Pixel custom events initialized');
+        // Track success messages
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                mutation.addedNodes.forEach(function(node) {
+                    if (node.nodeType === 1 && node.textContent) {
+                        const text = node.textContent.toLowerCase();
+                        if (text.includes('commande réussie') || text.includes('merci') || text.includes('success')) {
+                            if (typeof fbq === 'function') {
+                                fbq('track', 'Lead');
+                                console.log('Meta Pixel Lead event fired on: Success Message');
+                            }
+                        }
+                    }
+                });
+            });
+        });
+        
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+            characterData: true
+        });
+        
+        console.log('Meta Pixel events initialized');
     });
     </script>
-    <!-- End Meta Pixel Custom Events Script -->
 
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" />
@@ -176,7 +167,4 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
-  <script>
-    fbq('track', 'ViewContent');
-  </script>
 </html>
