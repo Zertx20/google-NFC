@@ -36,8 +36,28 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1910072642926314');
-    fbq('track', 'PageView');
+    </script>
+    <script>
+    // Initialize pixel after script loads
+    (function() {
+      if (window.fbq) {
+        window.fbq('init', '1910072642926314');
+        window.fbq('track', 'PageView');
+      } else {
+        // Wait for pixel to load
+        var checkFbq = setInterval(function() {
+          if (window.fbq) {
+            window.fbq('init', '1910072642926314');
+            window.fbq('track', 'PageView');
+            clearInterval(checkFbq);
+          }
+        }, 100);
+        // Timeout after 5 seconds
+        setTimeout(function() {
+          clearInterval(checkFbq);
+        }, 5000);
+      }
+    })();
     </script>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1910072642926314&ev=PageView&noscript=1"
