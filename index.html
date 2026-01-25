@@ -41,6 +41,98 @@
     </script>
     <!-- End Meta Pixel Code -->
 
+    <!-- Meta Pixel Custom Events Script -->
+    <script>
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        // Track Lead events on main CTA buttons and WhatsApp buttons
+        function trackLeadEvent(element, eventType) {
+            // Prevent multiple tracking on the same element
+            if (element.dataset.fbqTracked === 'true') {
+                return;
+            }
+            
+            // Track Lead event when element is clicked
+            element.addEventListener('click', function() {
+                // Fire Meta Pixel Lead event
+                fbq('track', 'Lead');
+                
+                // Mark as tracked to prevent duplicate events
+                element.dataset.fbqTracked = 'true';
+                
+                console.log('Meta Pixel Lead event tracked on:', eventType);
+            });
+        }
+        
+        // Find and track all main CTA buttons (Order Now, Commander, etc.)
+        const ctaButtons = document.querySelectorAll('button[class*="teal"], button[class*="bg-teal"], button[class*="commander"], button[class*="order"]');
+        ctaButtons.forEach(function(button) {
+            trackLeadEvent(button, 'CTA Button');
+        });
+        
+        // Find and track all WhatsApp buttons
+        const whatsappButtons = document.querySelectorAll('button[onclick*="whatsapp"], button[onclick*="WhatsApp"], a[href*="wa.me"], a[href*="whatsapp"]');
+        whatsappButtons.forEach(function(button) {
+            trackLeadEvent(button, 'WhatsApp Button');
+        });
+        
+        // Track Lead event on successful form submission
+        function trackFormSubmission() {
+            // Look for success messages or form completion
+            const successObserver = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    mutation.addedNodes.forEach(function(node) {
+                        // Check if success message appears
+                        if (node.nodeType === Node.ELEMENT_NODE) {
+                            const successElement = node.querySelector ? node.querySelector('[class*="success"], [class*="réussie"], [class*="confirm"]') : null;
+                            const isSuccessMessage = node.textContent && (
+                                node.textContent.includes('Commande réussie') ||
+                                node.textContent.includes('Merci') ||
+                                node.textContent.includes('success') ||
+                                node.textContent.includes('confirmé')
+                            );
+                            
+                            if (successElement || isSuccessMessage) {
+                                // Fire Lead event on successful form submission
+                                fbq('track', 'Lead');
+                                console.log('Meta Pixel Lead event tracked on: Form Submission Success');
+                                
+                                // Stop observing after tracking
+                                successObserver.disconnect();
+                            }
+                        }
+                    });
+                });
+            });
+            
+            // Start observing the document for success messages
+            successObserver.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        }
+        
+        // Initialize form submission tracking
+        trackFormSubmission();
+        
+        // Also track form submit events directly
+        const forms = document.querySelectorAll('form');
+        forms.forEach(function(form) {
+            form.addEventListener('submit', function(e) {
+                // Small delay to ensure form processes first
+                setTimeout(function() {
+                    fbq('track', 'Lead');
+                    console.log('Meta Pixel Lead event tracked on: Form Submit');
+                }, 100);
+            });
+        });
+        
+        console.log('Meta Pixel custom events initialized');
+    });
+    </script>
+    <!-- End Meta Pixel Custom Events Script -->
+
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
