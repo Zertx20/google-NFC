@@ -1,11 +1,3 @@
-interface MetaPixelEvent {
-  event_name: string;
-  event_time: number;
-  action_source: 'website';
-  user_data?: any;
-  custom_data?: any;
-}
-
 interface ViewContentData {
   content_name: string;
   content_type: string;
@@ -27,8 +19,7 @@ class MetaPixel {
   private static instance: MetaPixel;
   private pixelId: string = '1910072642926314';
   private isInitialized: boolean = false;
-  private hasPageView: boolean = false;
-  private hasViewContent: boolean = false;
+  private lastTrackedPath: string = '';
 
   private constructor() {}
 
@@ -44,7 +35,7 @@ class MetaPixel {
       return;
     }
 
-    // Initialize Meta Pixel
+    // Initialize Meta Pixel (only init, no PageView here)
     if (window.fbq) {
       window.fbq('init', this.pixelId);
       this.isInitialized = true;
@@ -52,18 +43,23 @@ class MetaPixel {
     }
   }
 
-  public trackPageView(): void {
-    if (!this.isInitialized || !window.fbq || this.hasPageView) {
+  public trackPageView(pathname: string): void {
+    if (!this.isInitialized || !window.fbq) {
+      return;
+    }
+
+    // Prevent duplicate PageView for same path
+    if (this.lastTrackedPath === pathname) {
       return;
     }
 
     window.fbq('track', 'PageView');
-    this.hasPageView = true;
-    console.log('Meta Pixel PageView tracked');
+    this.lastTrackedPath = pathname;
+    console.log('Meta Pixel PageView tracked for:', pathname);
   }
 
   public trackViewContent(data: ViewContentData): void {
-    if (!this.isInitialized || !window.fbq || this.hasViewContent) {
+    if (!this.isInitialized || !window.fbq) {
       return;
     }
 
@@ -73,7 +69,6 @@ class MetaPixel {
       value: data.value,
       currency: data.currency
     });
-    this.hasViewContent = true;
     console.log('Meta Pixel ViewContent tracked:', data);
   }
 
@@ -86,14 +81,6 @@ class MetaPixel {
       content_name: data.content_name
     });
     console.log('Meta Pixel Lead tracked:', data);
-  }
-
-  public resetViewContent(): void {
-    this.hasViewContent = false;
-  }
-
-  public resetPageView(): void {
-    this.hasPageView = false;
   }
 }
 

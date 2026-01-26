@@ -3,6 +3,7 @@ import { AppRoutes } from "./router";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n";
 import MetaPixel from "./components/MetaPixel";
+import PageViewTracker from "./components/PageViewTracker";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <MetaPixel />
       <I18nextProvider i18n={i18n}>
         <BrowserRouter basename={__BASE_PATH__}>
+          <PageViewTracker />
           <AppRoutes />
         </BrowserRouter>
       </I18nextProvider>
