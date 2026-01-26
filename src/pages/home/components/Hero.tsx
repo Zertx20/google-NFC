@@ -1,6 +1,12 @@
 import { useState, useEffect } from 'react';
 import OrderForm from './OrderForm';
 
+declare global {
+  interface Window {
+    fbq?: (...args: any[]) => void;
+  }
+}
+
 export default function Hero() {
   const [selectedQuantity, setSelectedQuantity] = useState(1);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -53,15 +59,6 @@ export default function Hero() {
   };
 
   const openWhatsApp = () => {
-    // Track Lead event when WhatsApp button is clicked
-    // This fires before opening WhatsApp to ensure tracking completes
-    if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-      window.fbq('track', 'Lead', {
-        content_name: 'WhatsApp Contact - Hero',
-        content_category: 'Contact'
-      });
-    }
-    
     const phoneNumber = '+213795651299';
     const message = encodeURIComponent('Bonjour, je suis intéressé(e) par la Plaque Avis Google NFC. Pouvez-vous me donner plus d\'informations ?');
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
@@ -74,13 +71,16 @@ export default function Hero() {
         <div className="bg-white rounded-lg shadow-lg p-2 text-xs text-gray-700 font-medium">
           +213 795 65 12 99
         </div>
-        <button
-          onClick={openWhatsApp}
+        <a
+          href="https://wa.me/213795651299?text=Bonjour, je suis intéressé(e) par la Plaque Avis Google NFC. Pouvez-vous me donner plus d'informations ?"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => { if(typeof window !== 'undefined' && window.fbq) window.fbq('track', 'Lead', {content_name: 'Commande Carte NFC'}); }}
           className="bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg p-4 transition-all transform hover:scale-110 flex items-center justify-center"
           aria-label="Contactez-nous sur WhatsApp"
         >
           <i className="ri-whatsapp-line text-2xl w-6 h-6 flex items-center justify-center"></i>
-        </button>
+        </a>
       </div>
       {/* Mobile Layout - Image Carousel First */}
       <div className="lg:hidden">
@@ -171,13 +171,16 @@ export default function Hero() {
               <i className="ri-customer-service-2-line text-teal-600 text-xl mb-1.5 w-5 h-5 flex items-center justify-center mx-auto"></i>
               <p className="text-xs text-gray-600 font-medium">Support 24/7</p>
             </div>
-            <button
-              onClick={openWhatsApp}
+            <a
+              href="https://wa.me/213795651299?text=Bonjour, je suis intéressé(e) par la Plaque Avis Google NFC. Pouvez-vous me donner plus d'informations ?"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => { if(typeof window !== 'undefined' && window.fbq) window.fbq('track', 'Lead', {content_name: 'Commande Carte NFC'}); }}
               className="text-center p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors cursor-pointer"
             >
               <i className="ri-whatsapp-line text-green-600 text-xl mb-1.5 w-5 h-5 flex items-center justify-center mx-auto"></i>
               <p className="text-xs text-gray-600 font-medium">WhatsApp</p>
-            </button>
+            </a>
           </div>
         </div>
 
@@ -327,13 +330,16 @@ export default function Hero() {
                 <i className="ri-customer-service-2-line text-teal-600 text-2xl mb-2 w-6 h-6 flex items-center justify-center mx-auto"></i>
                 <p className="text-xs text-gray-600 font-medium">Support 24/7</p>
               </div>
-              <button
-                onClick={openWhatsApp}
+              <a
+                href="https://wa.me/213795651299?text=Bonjour, je suis intéressé(e) par la Plaque Avis Google NFC. Pouvez-vous me donner plus d'informations ?"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => { if(typeof window !== 'undefined' && window.fbq) window.fbq('track', 'Lead', {content_name: 'Commande Carte NFC'}); }}
                 className="text-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors cursor-pointer"
               >
                 <i className="ri-whatsapp-line text-green-600 text-2xl mb-2 w-6 h-6 flex items-center justify-center mx-auto"></i>
                 <p className="text-xs text-gray-600 font-medium">WhatsApp</p>
-              </button>
+              </a>
             </div>
           </div>
         </div>
