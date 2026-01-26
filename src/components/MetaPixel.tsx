@@ -6,19 +6,27 @@ const MetaPixel = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Initialize Meta Pixel once
-    metaPixel.init();
+    // Initialize Meta Pixel once - wrapped in try-catch
+    try {
+      metaPixel.init();
+    } catch (error) {
+      console.error('MetaPixel component initialization failed:', error);
+    }
   }, []);
 
   useEffect(() => {
-    // Track ViewContent only on product page (home page)
-    if (location.pathname === '/' || location.pathname === '/home') {
-      metaPixel.trackViewContent({
-        content_name: 'Carte NFC',
-        content_type: 'product',
-        value: 1,
-        currency: 'DZD'
-      });
+    // Track ViewContent only on product page - wrapped in try-catch
+    try {
+      if (location.pathname === '/' || location.pathname === '/home') {
+        metaPixel.trackViewContent({
+          content_name: 'Carte NFC',
+          content_type: 'product',
+          value: 1,
+          currency: 'DZD'
+        });
+      }
+    } catch (error) {
+      console.error('MetaPixel ViewContent tracking failed:', error);
     }
   }, [location.pathname]);
 

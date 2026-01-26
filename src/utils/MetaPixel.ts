@@ -11,7 +11,7 @@ interface LeadData {
 
 declare global {
   interface Window {
-    fbq?: (command: string, eventName: string, parameters?: any) => void;
+    fbq?: (...args: any[]) => void;
   }
 }
 
@@ -31,56 +31,74 @@ class MetaPixel {
   }
 
   public init(): void {
-    if (this.isInitialized || typeof window === 'undefined') {
-      return;
-    }
+    try {
+      if (this.isInitialized || typeof window === 'undefined') {
+        return;
+      }
 
-    // Initialize Meta Pixel (only init, no PageView here)
-    if (window.fbq) {
-      window.fbq('init', this.pixelId);
-      this.isInitialized = true;
-      console.log('Meta Pixel initialized');
+      // Check if fbq exists before using it
+      if (typeof window.fbq === 'function') {
+        window.fbq('init', this.pixelId);
+        this.isInitialized = true;
+        console.log('Meta Pixel initialized');
+      } else {
+        console.warn('Meta Pixel fbq not available');
+      }
+    } catch (error) {
+      console.error('Meta Pixel initialization failed:', error);
     }
   }
 
   public trackPageView(pathname: string): void {
-    if (!this.isInitialized || !window.fbq) {
-      return;
-    }
+    try {
+      if (!this.isInitialized || typeof window === 'undefined' || typeof window.fbq !== 'function') {
+        return;
+      }
 
-    // Prevent duplicate PageView for same path
-    if (this.lastTrackedPath === pathname) {
-      return;
-    }
+      // Prevent duplicate PageView for same path
+      if (this.lastTrackedPath === pathname) {
+        return;
+      }
 
-    window.fbq('track', 'PageView');
-    this.lastTrackedPath = pathname;
-    console.log('Meta Pixel PageView tracked for:', pathname);
+      window.fbq('track', 'PageView');
+      this.lastTrackedPath = pathname;
+      console.log('Meta Pixel PageView tracked for:', pathname);
+    } catch (error) {
+      console.error('Meta Pixel PageView tracking failed:', error);
+    }
   }
 
   public trackViewContent(data: ViewContentData): void {
-    if (!this.isInitialized || !window.fbq) {
-      return;
-    }
+    try {
+      if (typeof window === 'undefined' || typeof window.fbq !== 'function') {
+        return;
+      }
 
-    window.fbq('track', 'ViewContent', {
-      content_name: data.content_name,
-      content_type: data.content_type,
-      value: data.value,
-      currency: data.currency
-    });
-    console.log('Meta Pixel ViewContent tracked:', data);
+      window.fbq('track', 'ViewContent', {
+        content_name: data.content_name,
+        content_type: data.content_type,
+        value: data.value,
+        currency: data.currency
+      });
+      console.log('Meta Pixel ViewContent tracked:', data);
+    } catch (error) {
+      console.error('Meta Pixel ViewContent tracking failed:', error);
+    }
   }
 
   public trackLead(data: LeadData): void {
-    if (!this.isInitialized || !window.fbq) {
-      return;
-    }
+    try {
+      if (typeof window === 'undefined' || typeof window.fbq !== 'function') {
+        return;
+      }
 
-    window.fbq('track', 'Lead', {
-      content_name: data.content_name
-    });
-    console.log('Meta Pixel Lead tracked:', data);
+      window.fbq('track', 'Lead', {
+        content_name: data.content_name
+      });
+      console.log('Meta Pixel Lead tracked:', data);
+    } catch (error) {
+      console.error('Meta Pixel Lead tracking failed:', error);
+    }
   }
 }
 
