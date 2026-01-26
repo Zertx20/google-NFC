@@ -26,7 +26,7 @@
     <meta name="geo.region" content="DZ" />
     <meta name="geo.placename" content="Algérie" />
     
-    <!-- Meta Pixel Code -->
+    <!-- Meta Pixel Base Code -->
     <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -36,21 +36,11 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1910072642926314');
-    fbq('track', 'PageView');
-    
-    // Fire ViewContent after pixel is loaded
-    fbq('track', 'ViewContent');
-    
-    // Fire Lead event for testing
-    setTimeout(function() {
-        fbq('track', 'Lead');
-    }, 1000);
     </script>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1910072642926314&ev=PageView&noscript=1"
     /></noscript>
-    <!-- End Meta Pixel Code -->
+    <!-- End Meta Pixel Base Code -->
 
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" />
