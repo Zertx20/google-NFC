@@ -62,8 +62,9 @@
     }
     </script>
 
-    <!-- Meta Pixel Code (PageView) -->
+    <!-- Meta Pixel Code (Optimized for React SPA) -->
     <script>
+      // Meta Pixel Base Code - Load before React
       !function(f,b,e,v,n,t,s)
       {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
       n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -72,8 +73,71 @@
       t.src=v;s=b.getElementsByTagName(e)[0];
       s.parentNode.insertBefore(t,s)}(window, document,'script',
       'https://connect.facebook.net/en_US/fbevents.js');
+      
+      // Initialize Pixel
       fbq('init', '1910072642926314'); 
+      
+      // Track initial PageView
       fbq('track', 'PageView');
+      
+      // Store current path to prevent duplicate PageView
+      window.lastTrackedPath = window.location.pathname;
+      
+      // Enhanced Purchase Tracking for React SPA
+      window.trackPurchase = function() {
+        try {
+          // Robust selector for total price - handles multiple possible structures
+          let totalValue = 0;
+          
+          // Try different selectors for total price
+          const totalSelectors = [
+            '.text-teal-600', // Current selector for total price
+            '[class*="text-teal-600"]', // Backup selector
+            '.text-2xl.font-bold', // Another possible selector
+            'span:contains("DZD")' // Fallback selector
+          ];
+          
+          for (const selector of totalSelectors) {
+            const element = document.querySelector(selector);
+            if (element && element.textContent) {
+              // Extract numeric value from text like "3,500 DZD"
+              const numericValue = element.textContent.replace(/[^\d]/g, '');
+              totalValue = parseFloat(numericValue) || 0;
+              if (totalValue > 0) break; // Found valid price
+            }
+          }
+          
+          // Fallback to default price if extraction fails
+          if (totalValue === 0) {
+            totalValue = 3500; // Default base price
+          }
+          
+          // Track Purchase event
+          fbq('track', 'Purchase', {
+            value: totalValue,
+            currency: 'DZD',
+            content_type: 'product',
+            content_name: 'Plaque Avis Google NFC'
+          });
+          
+          console.log('Meta Pixel Purchase tracked:', { value: totalValue, currency: 'DZD' });
+        } catch (error) {
+          console.error('Error tracking Purchase:', error);
+        }
+      };
+      
+      // SPA PageView tracking for React Router
+      window.trackPageView = function(pathname) {
+        try {
+          if (window.lastTrackedPath !== pathname) {
+            fbq('track', 'PageView');
+            window.lastTrackedPath = pathname;
+            console.log('Meta Pixel PageView tracked for:', pathname);
+          }
+        } catch (error) {
+          console.error('Error tracking PageView:', error);
+        }
+      };
     </script>
     <!-- End Meta Pixel -->
 
@@ -82,23 +146,46 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 
-    <!-- Track Purchase Button -->
+    <!-- Enhanced Purchase Button Tracking -->
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        const orderButton = document.querySelector('button[type="submit"]'); // زر Commander
-        if(orderButton){
-          orderButton.addEventListener('click', function() {
-            const totalElement = document.querySelector('.total span'); // تحقق من Selector
-            let totalValue = 0;
-            if(totalElement){
-              totalValue = parseFloat(totalElement.textContent.replace(/\D/g,'')) || 0;
-            }
-            fbq('track', 'Purchase', {
-              value: totalValue,
-              currency: 'DZD'
+        // Wait for React to render, then attach event listeners
+        setTimeout(function() {
+          // Find all possible submit buttons (Commander buttons)
+          const submitButtons = document.querySelectorAll('button[type="submit"]');
+          
+          submitButtons.forEach(function(button) {
+            // Remove existing listeners to prevent duplicates
+            button.removeEventListener('click', window.trackPurchase);
+            
+            // Add new listener with enhanced tracking
+            button.addEventListener('click', function(event) {
+              // Track purchase before form submission
+              window.trackPurchase();
             });
           });
-        }
+          
+          console.log('Meta Pixel: Attached purchase tracking to', submitButtons.length, 'buttons');
+        }, 1000); // Wait 1 second for React to mount
+      });
+      
+      // Also handle dynamically added buttons (for SPA navigation)
+      const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.addedNodes.length) {
+            const newButtons = document.querySelectorAll('button[type="submit"]:not([data-pixel-tracked])');
+            newButtons.forEach(function(button) {
+              button.setAttribute('data-pixel-tracked', 'true');
+              button.addEventListener('click', window.trackPurchase);
+            });
+          }
+        });
+      });
+      
+      // Start observing for dynamic content
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
       });
     </script>
 
